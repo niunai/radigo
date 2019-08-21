@@ -45,7 +45,7 @@ func (c *recCommand) Run(args []string) int {
 			"Invalid start time format '%s': %s", start, err))
 		return 1
 	}
-	if fileType != AudioFormatAAC && fileType != AudioFormatMP3 {
+	if fileType != AudioFormatAAC && fileType != AudioFormatMP3 && fileType != AudioFormatM4A {
 		c.ui.Error(fmt.Sprintf(
 			"Unsupported audio format: %s", fileType))
 		return 1
@@ -148,6 +148,8 @@ func (c *recCommand) Run(args []string) int {
 		retErr = os.Rename(concatedFile, output.AbsPath())
 	case AudioFormatMP3:
 		retErr = ConvertAACtoMP3(ctx, concatedFile, output.AbsPath())
+	case AudioFormatM4A:
+		retErr = ConvertAACtoM4A(ctx, concatedFile, output.AbsPath())
 	}
 	if retErr != nil {
 		c.ui.Error(fmt.Sprintf(
@@ -171,6 +173,6 @@ Options:
   -id=name                 Station id
   -start,s=201610101000    Start time
   -area,a=name             Area id
-  -output,o=aac            Output file type (aac, mp3)
+  -output,o=aac            Output file type (aac, mp3, m4a)
 `)
 }
