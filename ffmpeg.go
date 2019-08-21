@@ -78,7 +78,7 @@ func ConvertAACtoMP3(ctx context.Context, input, output string) error {
 	return f.run(output)
 }
 
-func ConvertAACtoM4A(ctx context.Context, input, output string) error {
+func ConvertAACtoM4A(ctx context.Context, input, output string, metadata map[string]string) error {
 	f, err := newFfmpeg(ctx)
 	if err != nil {
 		return err
@@ -89,6 +89,11 @@ func ConvertAACtoM4A(ctx context.Context, input, output string) error {
 		"-c", "copy",
 		"-y", // overwrite the output file without asking
 	)
+
+	for k, v := range metadata {
+		f.setArgs("-metadata", fmt.Sprintf("%s=%s", k, v))
+	}
+
 	// TODO: Collect log
 	return f.run(output)
 }

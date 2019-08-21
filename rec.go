@@ -28,8 +28,8 @@ func (c *recCommand) Run(args []string) int {
 	f.StringVar(&start, "s", "", "start")
 	f.StringVar(&areaID, "area", "", "area")
 	f.StringVar(&areaID, "a", "", "area")
-	f.StringVar(&fileType, "output", AudioFormatAAC, "output")
-	f.StringVar(&fileType, "o", AudioFormatAAC, "output")
+	f.StringVar(&fileType, "output", AudioFormatM4A, "output")
+	f.StringVar(&fileType, "o", AudioFormatM4A, "output")
 	f.Usage = func() { c.ui.Error(c.Help()) }
 	if err := f.Parse(args); err != nil {
 		return 1
@@ -92,20 +92,18 @@ func (c *recCommand) Run(args []string) int {
 		return 1
 	}
 
-	go func() {
-		pg, err := client.GetProgramByStartTime(ctx, stationID, startTime)
-		if err != nil {
-			ctxCancel()
-			c.ui.Error(fmt.Sprintf(
-				"Failed to get the program: %s", err))
-		}
+	pg, err := client.GetProgramByStartTime(ctx, stationID, startTime)
+	if err != nil {
+		ctxCancel()
+		c.ui.Error(fmt.Sprintf(
+			"Failed to get the program: %s", err))
+	}
 
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"STATION ID", "TITLE"})
-		table.Append([]string{stationID, pg.Title})
-		fmt.Print("\n")
-		table.Render()
-	}()
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"STATION ID", "TITLE"})
+	table.Append([]string{stationID, pg.Title})
+	fmt.Print("\n")
+	table.Render()
 
 	uri, err := client.TimeshiftPlaylistM3U8(ctx, stationID, startTime)
 	if err != nil {
@@ -142,6 +140,14 @@ func (c *recCommand) Run(args []string) int {
 		return 1
 	}
 
+	metadata := map[string]string{
+		"title":  fmt.Sprintf("%s - %s", startTime.Format("2006/01/02"), pg.Title),
+		"album":  pg.Title,
+		"artist": trim(pg.Pfm),
+		"url":    pg.URL,
+		"date":   startTime.Format(time.RFC3339),
+	}
+
 	var retErr error
 	switch output.AudioFormat() {
 	case AudioFormatAAC:
@@ -149,7 +155,7 @@ func (c *recCommand) Run(args []string) int {
 	case AudioFormatMP3:
 		retErr = ConvertAACtoMP3(ctx, concatedFile, output.AbsPath())
 	case AudioFormatM4A:
-		retErr = ConvertAACtoM4A(ctx, concatedFile, output.AbsPath())
+		retErr = ConvertAACtoM4A(ctx, concatedFile, output.AbsPath(), metadata)
 	}
 	if retErr != nil {
 		c.ui.Error(fmt.Sprintf(
@@ -159,6 +165,10 @@ func (c *recCommand) Run(args []string) int {
 
 	c.ui.Output(fmt.Sprintf("Completed!\n%s", output.AbsPath()))
 	return 0
+}
+
+func trim(str string) string {
+	return strings.ReplaceAll(str, "\u3000", " ")
 }
 
 func (c *recCommand) Synopsis() string {
