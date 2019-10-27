@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 )
 
@@ -57,7 +58,8 @@ func download(link, output string) error {
 	defer resp.Body.Close()
 
 	_, fileName := filepath.Split(link)
-	file, err := os.Create(filepath.Join(output, fileName))
+
+	file, err := os.Create(filepath.Join(output, strings.Replace(fileName, "?", "-", -1)))
 	if err != nil {
 		return err
 	}
