@@ -3,7 +3,7 @@
 RADIGOPKG=$(shell go list ./...)
 
 REVISION := $(shell git rev-parse --short HEAD)
-DEP := $(shell which dep)
+DEP := $(shell where dep)
 
 all: help
 
