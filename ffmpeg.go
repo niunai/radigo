@@ -117,6 +117,7 @@ func ConcatAACFilesFromList(ctx context.Context, resourcesDir string) (string, e
 			return "", err
 		}
 	}
+	listFile.Close()
 
 	concatedFile := filepath.Join(resourcesDir, "concated.aac")
 	if err := ConcatAACFiles(ctx, listFile.Name(), concatedFile); err != nil {
