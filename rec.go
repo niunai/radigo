@@ -141,9 +141,10 @@ func (c *recCommand) Run(args []string) int {
 	}
 
 	metadata := map[string]string{
-		"title":  fmt.Sprintf("%s - %s", startTime.Format("2006/01/02"), pg.Title),
-		"album":  pg.Title,
-		"artist": trim(pg.Pfm),
+		"title": fmt.Sprintf("%s - %s", startTime.Format("2006/01/02"), pg.Title),
+		"album": pg.Title,
+		//"artist": trim(pg.Pfm),
+		"artist": "ラジオ",
 		"url":    pg.URL,
 		"date":   startTime.Format(time.RFC3339),
 	}
