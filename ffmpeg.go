@@ -139,6 +139,7 @@ func ConcatAACFilesAll(ctx context.Context, files []string, resourcesDir string,
 		}
 		err = ConcatAACFilesAll(ctx, append([]string{tmpOutputFile.Name()}, restFiles...), resourcesDir, output)
 		defer os.Remove(tmpOutputFile.Name())
+		tmpOutputFile.Close()
 		return err
 	} else {
 		return ConcatAACFiles(ctx, files, resourcesDir, output)
@@ -158,6 +159,7 @@ func ConcatAACFiles(ctx context.Context, input []string, resourcesDir string, ou
 			return err
 		}
 	}
+	listFile.Close()
 
 	f, err := newFfmpeg(ctx)
 	if err != nil {
