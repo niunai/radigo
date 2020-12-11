@@ -132,6 +132,7 @@ func ConcatAACFilesAll(ctx context.Context, files []string, resourcesDir string,
 			fmt.Println("Failed to call ioutil.TempFile")
 			return err
 		}
+		defer tmpOutputFile.Close()
 		err = ConcatAACFiles(ctx, reducedFiles, resourcesDir, tmpOutputFile.Name())
 		if err != nil {
 			fmt.Println("Failed to ConcatAACFiles")
@@ -139,7 +140,6 @@ func ConcatAACFilesAll(ctx context.Context, files []string, resourcesDir string,
 		}
 		err = ConcatAACFilesAll(ctx, append([]string{tmpOutputFile.Name()}, restFiles...), resourcesDir, output)
 		defer os.Remove(tmpOutputFile.Name())
-		tmpOutputFile.Close()
 		return err
 	} else {
 		return ConcatAACFiles(ctx, files, resourcesDir, output)
@@ -151,6 +151,7 @@ func ConcatAACFiles(ctx context.Context, input []string, resourcesDir string, ou
 	if err0 != nil {
 		return err0
 	}
+	defer listFile.Close()
 	defer os.Remove(listFile.Name())
 
 	for _, f := range input {
@@ -159,7 +160,6 @@ func ConcatAACFiles(ctx context.Context, input []string, resourcesDir string, ou
 			return err
 		}
 	}
-	listFile.Close()
 
 	f, err := newFfmpeg(ctx)
 	if err != nil {
