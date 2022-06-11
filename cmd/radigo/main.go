@@ -7,7 +7,7 @@ import (
 	"runtime"
 
 	"github.com/mitchellh/cli"
-	"github.com/yyoshiki41/radigo"
+	"github.com/niunai/radigo"
 )
 
 func main() {
