@@ -33,7 +33,7 @@ Now downloading..
 +------------+---------------------------------+
 | STATION ID |              TITLE              |
 +------------+---------------------------------+
-| LFR        |　　  オードリーのオールナイトニッポン   　|
+| LFR        |　　  オードリーのオールナイトニッポン　　　　　　　　　　　　　　|
 +------------+---------------------------------+
 | Completed!
 /output/20180401010000-LFR.aac
@@ -60,7 +60,6 @@ Or release binaries are available on [the releases page](https://github.com/yyos
 #### Requirements
 
 - ffmpeg
-- rtmpdump (only if [recording a live streaming radio](#-rec-live))
 
 ### Build docker image from source
 
@@ -88,25 +87,26 @@ Available commands are:
 ```bash
 $ radigo area
 Area ID: JP13
-+--------------------+----------------+
-|        NAME        |   STATION ID   |
-+--------------------+----------------+
-| TBSラジオ           | TBS            |
-| ニッポン放送          | LFR            |
-| InterFM897         | INT            |
-| TOKYO FM           | FMT            |
-| J-WAVE             | FMJ            |
-| bayfm78            | BAYFM78        |
-| NACK5              | NACK5          |
-| ＦＭヨコハマ           | YFM            |
-| 文化放送            | QRR            |
-| ラジオNIKKEI第1      | RN1            |
-| ラジオNIKKEI第2      | RN2            |
-| NHKラジオ第2         | JOAB           |
-| NHK-FM（東京）        | JOAK-FM        |
-| NHKラジオ第１(東京)   | JOAK           |
-| 放送大学            | HOUSOU-DAIGAKU |
-+--------------------+----------------+
++----------------------+----------------+
+|         NAME         |   STATION ID   |
++----------------------+----------------+
+| TBSラジオ         　　　   | TBS            |
+| 文化放送　　　　　　　　　　　　　　　　　　　　　　　　　　　　　| QRR            |
+| ニッポン放送            | LFR            |
+| ラジオNIKKEI第1        | RN1            |
+| ラジオNIKKEI第2        | RN2            |
+| interfm              | INT            |
+| TOKYO FM             | FMT            |
+| J-WAVE               | FMJ            |
+| ラジオ日本　　　　　　　　　　　　　　　　　　　　　　　　　　　| JORF           |
+| bayfm78              | BAYFM78        |
+| NACK5                | NACK5          |
+| ＦＭヨコハマ　　　　　　　　　　　　　　　　　　　　　　　　　　| YFM            |
+| LuckyFM 茨城放送　　　　　　　　　　　　　| IBS            |
+| 放送大学　　　　　　　　　　　　　　　　　　　　　　　　　　　　　| HOUSOU-DAIGAKU |
+| NHKラジオ第1（東京）　　　　　　　　　　　　| JOAK           |
+| NHK-FM（東京）　　　　　　　　　　　　　　　　　　　　| JOAK-FM        |
++----------------------+----------------+
 ```
 
 #### Note
@@ -125,7 +125,7 @@ Now downloading..
 +------------+---------------------------------+
 | STATION ID |              TITLE              |
 +------------+---------------------------------+
-| LFR        |　　  オードリーのオールナイトニッポン   　|
+| LFR        |　　  オードリーのオールナイトニッポン　　　　　　　　　　　　　　|
 +------------+---------------------------------+
 Completed!
 /tmp/output/20161126010000-LFR.aac
