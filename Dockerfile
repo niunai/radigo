@@ -1,4 +1,5 @@
-FROM golang:1.14-alpine AS build
+# FROM golang:1.14-alpine AS build
+FROM arm64v8/golang:1.14.3-alpine AS build
 
 LABEL maintainer="yyoshiki41@gmail.com"
 
@@ -25,7 +26,8 @@ RUN make build-4-docker
 
 
 # This results in a single layer image
-FROM alpine:latest
+# FROM alpine:latest
+FROM arm64v8/alpine:latest
 
 # Set timezone
 ENV TZ "Asia/Tokyo"
@@ -34,8 +36,8 @@ VOLUME ["/output"]
 
 RUN apk add --no-cache ca-certificates ffmpeg rtmpdump tzdata
 
-COPY --from=build /usr/bin/ffmpeg /usr/bin/ffmpeg
-COPY --from=build /usr/bin/rtmpdump /usr/bin/rtmpdump
+# COPY --from=build /usr/bin/ffmpeg /usr/bin/ffmpeg
+# COPY --from=build /usr/bin/rtmpdump /usr/bin/rtmpdump
 COPY --from=build /bin/radigo /bin/radigo
 
 ENTRYPOINT ["/bin/radigo"]
