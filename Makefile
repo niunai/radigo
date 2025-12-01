@@ -37,4 +37,4 @@ test-cover:
 	done
 
 docker-build:
-	docker build -t yyoshiki41/radigo .
+	docker build -t niunai/radigo .
